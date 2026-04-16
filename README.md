@@ -42,7 +42,12 @@ GOOGLE_CLIENT_EMAIL=tu-service-account@tu-proyecto.iam.gserviceaccount.com
 GOOGLE_SHEET_ID=el-id-de-tu-sheet (esta en la URL del sheet)
 ```
 
-### 3. Instalar y ejecutar
+### 3. Requisitos
+
+- **Node.js 18+** (no funciona con Node 16)
+- Verificar con `node --version`
+
+### 4. Instalar y ejecutar
 
 ```bash
 npm install
@@ -51,7 +56,7 @@ npm start
 
 La primera vez escanea el QR con WhatsApp.
 
-### 4. Agregar el bot al grupo
+### 5. Agregar el bot al grupo
 
 1. Abrir WhatsApp en el celular
 2. Ir al grupo → info del grupo
@@ -81,7 +86,8 @@ pensamientos-bot/
 ├── src/
 │   ├── index.js      # Entry point
 │   ├── bot.js        # WhatsApp connection
-│   └── sheets.js     # Google Sheets integration
+│   └── sheets.cjs    # Google Sheets integration
+├── .env
 ├── .env.example
 ├── .gitignore
 └── package.json

@@ -1,11 +1,10 @@
-import { GoogleAuth } from 'google-auth-library';
-import { config } from 'dotenv';
-
-config();
+const { GoogleAuth } = require('google-auth-library');
+const { google } = require('googleapis');
+require('dotenv').config();
 
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
 
-export async function getAuthClient() {
+async function getAuthClient() {
   const auth = new GoogleAuth({
     scopes: SCOPES,
     credentials: {
@@ -18,9 +17,9 @@ export async function getAuthClient() {
   return auth;
 }
 
-export async function appendToSheet({ autor, timestamp, contenido }) {
+async function appendToSheet({ autor, timestamp, contenido }) {
   const auth = await getAuthClient();
-  const sheets = await import('googleapis').then(m => m.google.sheets({ version: 'v4', auth }));
+  const sheets = google.sheets({ version: 'v4', auth });
 
   const row = [autor, timestamp, contenido];
 
@@ -36,9 +35,9 @@ export async function appendToSheet({ autor, timestamp, contenido }) {
   console.log(`[SHEETS] Fila agregada: autor=${autor}, timestamp=${timestamp}`);
 }
 
-export async function initSheet() {
+async function initSheet() {
   const auth = await getAuthClient();
-  const sheets = await import('googleapis').then(m => m.google.sheets({ version: 'v4', auth }));
+  const sheets = google.sheets({ version: 'v4', auth });
 
   try {
     await sheets.spreadsheets.get({
@@ -56,7 +55,7 @@ export async function initSheet() {
           sheets: [{
             properties: {
               title: 'Datos',
-                gridProperties: {
+              gridProperties: {
                 columnCount: 3,
               },
             },
@@ -69,3 +68,5 @@ export async function initSheet() {
     }
   }
 }
+
+module.exports = { appendToSheet, initSheet };

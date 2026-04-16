@@ -1,5 +1,4 @@
 import { Baileys, MultiFileAuthState } from '@whiskeysockets/baileys';
-import { appendToSheet } from './sheets.js';
 
 const PENSAMIENTO_REGEX = /pensamiento\s*(?:(\d{1,2}:\d{2})\s*)?(.+)/i;
 
@@ -38,6 +37,7 @@ export async function startBot() {
       console.log(`[PENSAMIENTO]${hora ? ` ${hora}` : ''} ${contenido} (de: ${autor})`);
 
       try {
+        const { appendToSheet } = await import('./sheets.cjs');
         await appendToSheet({ autor, timestamp, contenido });
       } catch (error) {
         console.error('[ERROR] Guardando en sheets:', error.message);

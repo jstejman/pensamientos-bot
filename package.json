@@ -4,6 +4,9 @@
   "description": "Bot que escucha mensajes en WhatsApp y guarda pensamientos en Google Sheets",
   "main": "src/index.js",
   "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "start": "node src/index.js",
     "dev": "node --watch src/index.js"
