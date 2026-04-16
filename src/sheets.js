@@ -1,5 +1,3 @@
-import { initializeApp } from 'googleapis/build/src/index.js';
-import { authenticate } from '@google-cloud/local-auth';
 import { GoogleAuth } from 'google-auth-library';
 import { config } from 'dotenv';
 
@@ -20,12 +18,11 @@ export async function getAuthClient() {
   return auth;
 }
 
-export async function appendToSheet(values) {
+export async function appendToSheet({ autor, timestamp, contenido }) {
   const auth = await getAuthClient();
   const sheets = await import('googleapis').then(m => m.google.sheets({ version: 'v4', auth }));
 
-  const timestamp = new Date().toISOString();
-  const row = [timestamp, ...values];
+  const row = [autor, timestamp, contenido];
 
   await sheets.spreadsheets.values.append({
     spreadsheetId: process.env.GOOGLE_SHEET_ID,
@@ -36,7 +33,7 @@ export async function appendToSheet(values) {
     },
   });
 
-  console.log(`[SHEETS] Fila agregada: ${JSON.stringify(row)}`);
+  console.log(`[SHEETS] Fila agregada: autor=${autor}, timestamp=${timestamp}`);
 }
 
 export async function initSheet() {
@@ -59,8 +56,8 @@ export async function initSheet() {
           sheets: [{
             properties: {
               title: 'Datos',
-              gridProperties: {
-                columnCount: 5,
+                gridProperties: {
+                columnCount: 3,
               },
             },
           }],

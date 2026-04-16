@@ -87,10 +87,18 @@ pensamientos-bot/
 └── package.json
 ```
 
+## Columnas del Sheet
+
+| Columna | Descripcion |
+|---|---|
+| **Autor** | Nombre de WhatsApp del que escribio (o numero si no tiene nombre) |
+| **Timestamp** | Fecha y hora ISO de cuando se registro |
+| **Contenido** | El texto del mensaje |
+
 ## Funcionamiento
 
 1. El bot se conecta a WhatsApp via Baileys (API no oficial)
 2. Escucha todos los mensajes del grupo
-3. Filtra los que matchean el patron `pensamiento hh:mm ...`
-4. Guarda en Google Sheets: timestamp | hora | contenido | remitente | grupo
+3. Filtra los que contienen la palabra "pensamiento"
+4. Guarda en Google Sheets: autor | timestamp | contenido
 5. No responde en el grupo (solo observa)

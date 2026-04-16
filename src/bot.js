@@ -31,21 +31,14 @@ export async function startBot() {
       if (!match) continue;
 
       const [, hora, contenido] = match;
-      const groupId = msg.key.remoteJid;
-      const sender = msg.key.participant || msg.key.remoteJid;
+      const senderNum = msg.key.participant || msg.key.remoteJid;
+      const autor = msg.pushName || senderNum;
+      const timestamp = new Date().toISOString();
 
-      const registro = {
-        hora: hora || '—',
-        contenido,
-        groupId,
-        sender,
-        timestamp: new Date().toISOString(),
-      };
-
-      console.log(`[PENSAMIENTO]${hora ? ` ${hora}` : ''} ${contenido}`);
+      console.log(`[PENSAMIENTO]${hora ? ` ${hora}` : ''} ${contenido} (de: ${autor})`);
 
       try {
-        await appendToSheet([registro.hora, contenido, sender, groupId]);
+        await appendToSheet({ autor, timestamp, contenido });
       } catch (error) {
         console.error('[ERROR] Guardando en sheets:', error.message);
       }
