@@ -1,7 +1,7 @@
 import { Baileys, MultiFileAuthState } from '@whiskeysockets/baileys';
 import { appendToSheet } from './sheets.js';
 
-const PENSAMIENTO_REGEX = /^pensamiento\s+(\d{1,2}:\d{2})\s+(.+)/i;
+const PENSAMIENTO_REGEX = /pensamiento\s*(?:(\d{1,2}:\d{2})\s*)?(.+)/i;
 
 function getMessageText(msg) {
   if (!msg) return '';
@@ -35,17 +35,17 @@ export async function startBot() {
       const sender = msg.key.participant || msg.key.remoteJid;
 
       const registro = {
-        hora,
+        hora: hora || '—',
         contenido,
         groupId,
         sender,
         timestamp: new Date().toISOString(),
       };
 
-      console.log(`[PENSAMIENTO] ${hora} - ${contenido}`);
+      console.log(`[PENSAMIENTO]${hora ? ` ${hora}` : ''} ${contenido}`);
 
       try {
-        await appendToSheet([hora, contenido, sender, groupId]);
+        await appendToSheet([registro.hora, contenido, sender, groupId]);
       } catch (error) {
         console.error('[ERROR] Guardando en sheets:', error.message);
       }

@@ -4,14 +4,17 @@ Bot que escucha mensajes en un grupo de WhatsApp y guarda los pensamientos en Go
 
 ## Formato de mensaje
 
+Solo necesita contener la palabra **"pensamiento"** en cualquier parte del mensaje. Case insensitive.
+
 ```
-pensamiento hh:mm texto del pensamiento
+pensamiento texto
+pensamiento 14:30 texto
+pEnsamiento 14:30 texto
+texto random pensamiento texto
+pensamiento texto random
 ```
 
-Ejemplo:
-```
-pensamiento 14:30 Hoy reflexione sobre la importancia de ser consistente
-```
+La hora es opcional. Si no se provee, se registra como "—".
 
 ## Setup
 
